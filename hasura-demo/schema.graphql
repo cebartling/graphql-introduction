@@ -1,0 +1,1552 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+# columns and relationships of "actors"
+type actors {
+  firstName: String!
+  id: uuid!
+  lastName: String!
+
+  # An array relationship
+  movie_actors(
+    # distinct select on columns
+    distinct_on: [movie_actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_actors_order_by!]
+
+    # filter the rows returned
+    where: movie_actors_bool_exp
+  ): [movie_actors!]!
+
+  # An aggregated array relationship
+  movie_actors_aggregate(
+    # distinct select on columns
+    distinct_on: [movie_actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_actors_order_by!]
+
+    # filter the rows returned
+    where: movie_actors_bool_exp
+  ): movie_actors_aggregate!
+}
+
+# aggregated selection of "actors"
+type actors_aggregate {
+  aggregate: actors_aggregate_fields
+  nodes: [actors!]!
+}
+
+# aggregate fields of "actors"
+type actors_aggregate_fields {
+  count(columns: [actors_select_column!], distinct: Boolean): Int
+  max: actors_max_fields
+  min: actors_min_fields
+}
+
+# order by aggregate values of table "actors"
+input actors_aggregate_order_by {
+  count: order_by
+  max: actors_max_order_by
+  min: actors_min_order_by
+}
+
+# input type for inserting array relation for remote table "actors"
+input actors_arr_rel_insert_input {
+  data: [actors_insert_input!]!
+  on_conflict: actors_on_conflict
+}
+
+# Boolean expression to filter rows from the table "actors". All fields are combined with a logical 'AND'.
+input actors_bool_exp {
+  _and: [actors_bool_exp]
+  _not: actors_bool_exp
+  _or: [actors_bool_exp]
+  firstName: String_comparison_exp
+  id: uuid_comparison_exp
+  lastName: String_comparison_exp
+  movie_actors: movie_actors_bool_exp
+}
+
+# unique or primary key constraints on table "actors"
+enum actors_constraint {
+  # unique or primary key constraint
+  actors_pkey
+}
+
+# input type for inserting data into table "actors"
+input actors_insert_input {
+  firstName: String
+  id: uuid
+  lastName: String
+  movie_actors: movie_actors_arr_rel_insert_input
+}
+
+# aggregate max on columns
+type actors_max_fields {
+  firstName: String
+  lastName: String
+}
+
+# order by max() on columns of table "actors"
+input actors_max_order_by {
+  firstName: order_by
+  lastName: order_by
+}
+
+# aggregate min on columns
+type actors_min_fields {
+  firstName: String
+  lastName: String
+}
+
+# order by min() on columns of table "actors"
+input actors_min_order_by {
+  firstName: order_by
+  lastName: order_by
+}
+
+# response of any mutation on the table "actors"
+type actors_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [actors!]!
+}
+
+# input type for inserting object relation for remote table "actors"
+input actors_obj_rel_insert_input {
+  data: actors_insert_input!
+  on_conflict: actors_on_conflict
+}
+
+# on conflict condition type for table "actors"
+input actors_on_conflict {
+  constraint: actors_constraint!
+  update_columns: [actors_update_column!]!
+}
+
+# ordering options when selecting data from "actors"
+input actors_order_by {
+  firstName: order_by
+  id: order_by
+  lastName: order_by
+  movie_actors_aggregate: movie_actors_aggregate_order_by
+}
+
+# select columns of table "actors"
+enum actors_select_column {
+  # column name
+  firstName
+
+  # column name
+  id
+
+  # column name
+  lastName
+}
+
+# input type for updating data in table "actors"
+input actors_set_input {
+  firstName: String
+  id: uuid
+  lastName: String
+}
+
+# update columns of table "actors"
+enum actors_update_column {
+  # column name
+  firstName
+
+  # column name
+  id
+
+  # column name
+  lastName
+}
+
+# conflict action
+enum conflict_action {
+  # ignore the insert on this row
+  ignore
+
+  # update the row with the given values
+  update
+}
+
+# columns and relationships of "directors"
+type directors {
+  firstName: String!
+  id: uuid!
+  lastName: String!
+
+  # An array relationship
+  movie_directors(
+    # distinct select on columns
+    distinct_on: [movie_directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_directors_order_by!]
+
+    # filter the rows returned
+    where: movie_directors_bool_exp
+  ): [movie_directors!]!
+
+  # An aggregated array relationship
+  movie_directors_aggregate(
+    # distinct select on columns
+    distinct_on: [movie_directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_directors_order_by!]
+
+    # filter the rows returned
+    where: movie_directors_bool_exp
+  ): movie_directors_aggregate!
+}
+
+# aggregated selection of "directors"
+type directors_aggregate {
+  aggregate: directors_aggregate_fields
+  nodes: [directors!]!
+}
+
+# aggregate fields of "directors"
+type directors_aggregate_fields {
+  count(columns: [directors_select_column!], distinct: Boolean): Int
+  max: directors_max_fields
+  min: directors_min_fields
+}
+
+# order by aggregate values of table "directors"
+input directors_aggregate_order_by {
+  count: order_by
+  max: directors_max_order_by
+  min: directors_min_order_by
+}
+
+# input type for inserting array relation for remote table "directors"
+input directors_arr_rel_insert_input {
+  data: [directors_insert_input!]!
+  on_conflict: directors_on_conflict
+}
+
+# Boolean expression to filter rows from the table "directors". All fields are combined with a logical 'AND'.
+input directors_bool_exp {
+  _and: [directors_bool_exp]
+  _not: directors_bool_exp
+  _or: [directors_bool_exp]
+  firstName: String_comparison_exp
+  id: uuid_comparison_exp
+  lastName: String_comparison_exp
+  movie_directors: movie_directors_bool_exp
+}
+
+# unique or primary key constraints on table "directors"
+enum directors_constraint {
+  # unique or primary key constraint
+  directors_pkey
+}
+
+# input type for inserting data into table "directors"
+input directors_insert_input {
+  firstName: String
+  id: uuid
+  lastName: String
+  movie_directors: movie_directors_arr_rel_insert_input
+}
+
+# aggregate max on columns
+type directors_max_fields {
+  firstName: String
+  lastName: String
+}
+
+# order by max() on columns of table "directors"
+input directors_max_order_by {
+  firstName: order_by
+  lastName: order_by
+}
+
+# aggregate min on columns
+type directors_min_fields {
+  firstName: String
+  lastName: String
+}
+
+# order by min() on columns of table "directors"
+input directors_min_order_by {
+  firstName: order_by
+  lastName: order_by
+}
+
+# response of any mutation on the table "directors"
+type directors_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [directors!]!
+}
+
+# input type for inserting object relation for remote table "directors"
+input directors_obj_rel_insert_input {
+  data: directors_insert_input!
+  on_conflict: directors_on_conflict
+}
+
+# on conflict condition type for table "directors"
+input directors_on_conflict {
+  constraint: directors_constraint!
+  update_columns: [directors_update_column!]!
+}
+
+# ordering options when selecting data from "directors"
+input directors_order_by {
+  firstName: order_by
+  id: order_by
+  lastName: order_by
+  movie_directors_aggregate: movie_directors_aggregate_order_by
+}
+
+# select columns of table "directors"
+enum directors_select_column {
+  # column name
+  firstName
+
+  # column name
+  id
+
+  # column name
+  lastName
+}
+
+# input type for updating data in table "directors"
+input directors_set_input {
+  firstName: String
+  id: uuid
+  lastName: String
+}
+
+# update columns of table "directors"
+enum directors_update_column {
+  # column name
+  firstName
+
+  # column name
+  id
+
+  # column name
+  lastName
+}
+
+# expression to compare columns of type Int. All fields are combined with logical 'AND'.
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+scalar money
+
+# expression to compare columns of type money. All fields are combined with logical 'AND'.
+input money_comparison_exp {
+  _eq: money
+  _gt: money
+  _gte: money
+  _in: [money!]
+  _is_null: Boolean
+  _lt: money
+  _lte: money
+  _neq: money
+  _nin: [money!]
+}
+
+# columns and relationships of "movie_actors"
+type movie_actors {
+  # An object relationship
+  actor: actors!
+  actorId: uuid!
+  id: uuid!
+
+  # An object relationship
+  movie: movies!
+  movieId: uuid!
+}
+
+# aggregated selection of "movie_actors"
+type movie_actors_aggregate {
+  aggregate: movie_actors_aggregate_fields
+  nodes: [movie_actors!]!
+}
+
+# aggregate fields of "movie_actors"
+type movie_actors_aggregate_fields {
+  count(columns: [movie_actors_select_column!], distinct: Boolean): Int
+}
+
+# order by aggregate values of table "movie_actors"
+input movie_actors_aggregate_order_by {
+  count: order_by
+}
+
+# input type for inserting array relation for remote table "movie_actors"
+input movie_actors_arr_rel_insert_input {
+  data: [movie_actors_insert_input!]!
+  on_conflict: movie_actors_on_conflict
+}
+
+# Boolean expression to filter rows from the table "movie_actors". All fields are combined with a logical 'AND'.
+input movie_actors_bool_exp {
+  _and: [movie_actors_bool_exp]
+  _not: movie_actors_bool_exp
+  _or: [movie_actors_bool_exp]
+  actor: actors_bool_exp
+  actorId: uuid_comparison_exp
+  id: uuid_comparison_exp
+  movie: movies_bool_exp
+  movieId: uuid_comparison_exp
+}
+
+# unique or primary key constraints on table "movie_actors"
+enum movie_actors_constraint {
+  # unique or primary key constraint
+  movie_actors_pkey
+}
+
+# input type for inserting data into table "movie_actors"
+input movie_actors_insert_input {
+  actor: actors_obj_rel_insert_input
+  actorId: uuid
+  id: uuid
+  movie: movies_obj_rel_insert_input
+  movieId: uuid
+}
+
+# response of any mutation on the table "movie_actors"
+type movie_actors_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [movie_actors!]!
+}
+
+# input type for inserting object relation for remote table "movie_actors"
+input movie_actors_obj_rel_insert_input {
+  data: movie_actors_insert_input!
+  on_conflict: movie_actors_on_conflict
+}
+
+# on conflict condition type for table "movie_actors"
+input movie_actors_on_conflict {
+  constraint: movie_actors_constraint!
+  update_columns: [movie_actors_update_column!]!
+}
+
+# ordering options when selecting data from "movie_actors"
+input movie_actors_order_by {
+  actor: actors_order_by
+  actorId: order_by
+  id: order_by
+  movie: movies_order_by
+  movieId: order_by
+}
+
+# select columns of table "movie_actors"
+enum movie_actors_select_column {
+  # column name
+  actorId
+
+  # column name
+  id
+
+  # column name
+  movieId
+}
+
+# input type for updating data in table "movie_actors"
+input movie_actors_set_input {
+  actorId: uuid
+  id: uuid
+  movieId: uuid
+}
+
+# update columns of table "movie_actors"
+enum movie_actors_update_column {
+  # column name
+  actorId
+
+  # column name
+  id
+
+  # column name
+  movieId
+}
+
+# columns and relationships of "movie_directors"
+type movie_directors {
+  # An object relationship
+  director: directors!
+  directorId: uuid!
+  id: uuid!
+
+  # An object relationship
+  movie: movies!
+  movieId: uuid!
+}
+
+# aggregated selection of "movie_directors"
+type movie_directors_aggregate {
+  aggregate: movie_directors_aggregate_fields
+  nodes: [movie_directors!]!
+}
+
+# aggregate fields of "movie_directors"
+type movie_directors_aggregate_fields {
+  count(columns: [movie_directors_select_column!], distinct: Boolean): Int
+}
+
+# order by aggregate values of table "movie_directors"
+input movie_directors_aggregate_order_by {
+  count: order_by
+}
+
+# input type for inserting array relation for remote table "movie_directors"
+input movie_directors_arr_rel_insert_input {
+  data: [movie_directors_insert_input!]!
+  on_conflict: movie_directors_on_conflict
+}
+
+# Boolean expression to filter rows from the table "movie_directors". All fields are combined with a logical 'AND'.
+input movie_directors_bool_exp {
+  _and: [movie_directors_bool_exp]
+  _not: movie_directors_bool_exp
+  _or: [movie_directors_bool_exp]
+  director: directors_bool_exp
+  directorId: uuid_comparison_exp
+  id: uuid_comparison_exp
+  movie: movies_bool_exp
+  movieId: uuid_comparison_exp
+}
+
+# unique or primary key constraints on table "movie_directors"
+enum movie_directors_constraint {
+  # unique or primary key constraint
+  movie_directors_pkey
+}
+
+# input type for inserting data into table "movie_directors"
+input movie_directors_insert_input {
+  director: directors_obj_rel_insert_input
+  directorId: uuid
+  id: uuid
+  movie: movies_obj_rel_insert_input
+  movieId: uuid
+}
+
+# response of any mutation on the table "movie_directors"
+type movie_directors_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [movie_directors!]!
+}
+
+# input type for inserting object relation for remote table "movie_directors"
+input movie_directors_obj_rel_insert_input {
+  data: movie_directors_insert_input!
+  on_conflict: movie_directors_on_conflict
+}
+
+# on conflict condition type for table "movie_directors"
+input movie_directors_on_conflict {
+  constraint: movie_directors_constraint!
+  update_columns: [movie_directors_update_column!]!
+}
+
+# ordering options when selecting data from "movie_directors"
+input movie_directors_order_by {
+  director: directors_order_by
+  directorId: order_by
+  id: order_by
+  movie: movies_order_by
+  movieId: order_by
+}
+
+# select columns of table "movie_directors"
+enum movie_directors_select_column {
+  # column name
+  directorId
+
+  # column name
+  id
+
+  # column name
+  movieId
+}
+
+# input type for updating data in table "movie_directors"
+input movie_directors_set_input {
+  directorId: uuid
+  id: uuid
+  movieId: uuid
+}
+
+# update columns of table "movie_directors"
+enum movie_directors_update_column {
+  # column name
+  directorId
+
+  # column name
+  id
+
+  # column name
+  movieId
+}
+
+# columns and relationships of "movies"
+type movies {
+  grossSalesRevenue: money!
+  id: uuid!
+
+  # An array relationship
+  movie_actors(
+    # distinct select on columns
+    distinct_on: [movie_actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_actors_order_by!]
+
+    # filter the rows returned
+    where: movie_actors_bool_exp
+  ): [movie_actors!]!
+
+  # An aggregated array relationship
+  movie_actors_aggregate(
+    # distinct select on columns
+    distinct_on: [movie_actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_actors_order_by!]
+
+    # filter the rows returned
+    where: movie_actors_bool_exp
+  ): movie_actors_aggregate!
+
+  # An array relationship
+  movie_directors(
+    # distinct select on columns
+    distinct_on: [movie_directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_directors_order_by!]
+
+    # filter the rows returned
+    where: movie_directors_bool_exp
+  ): [movie_directors!]!
+
+  # An aggregated array relationship
+  movie_directors_aggregate(
+    # distinct select on columns
+    distinct_on: [movie_directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_directors_order_by!]
+
+    # filter the rows returned
+    where: movie_directors_bool_exp
+  ): movie_directors_aggregate!
+  title: String!
+  yearProduced: Int!
+}
+
+# aggregated selection of "movies"
+type movies_aggregate {
+  aggregate: movies_aggregate_fields
+  nodes: [movies!]!
+}
+
+# aggregate fields of "movies"
+type movies_aggregate_fields {
+  avg: movies_avg_fields
+  count(columns: [movies_select_column!], distinct: Boolean): Int
+  max: movies_max_fields
+  min: movies_min_fields
+  stddev: movies_stddev_fields
+  stddev_pop: movies_stddev_pop_fields
+  stddev_samp: movies_stddev_samp_fields
+  sum: movies_sum_fields
+  var_pop: movies_var_pop_fields
+  var_samp: movies_var_samp_fields
+  variance: movies_variance_fields
+}
+
+# order by aggregate values of table "movies"
+input movies_aggregate_order_by {
+  avg: movies_avg_order_by
+  count: order_by
+  max: movies_max_order_by
+  min: movies_min_order_by
+  stddev: movies_stddev_order_by
+  stddev_pop: movies_stddev_pop_order_by
+  stddev_samp: movies_stddev_samp_order_by
+  sum: movies_sum_order_by
+  var_pop: movies_var_pop_order_by
+  var_samp: movies_var_samp_order_by
+  variance: movies_variance_order_by
+}
+
+# input type for inserting array relation for remote table "movies"
+input movies_arr_rel_insert_input {
+  data: [movies_insert_input!]!
+  on_conflict: movies_on_conflict
+}
+
+# aggregate avg on columns
+type movies_avg_fields {
+  yearProduced: Float
+}
+
+# order by avg() on columns of table "movies"
+input movies_avg_order_by {
+  yearProduced: order_by
+}
+
+# Boolean expression to filter rows from the table "movies". All fields are combined with a logical 'AND'.
+input movies_bool_exp {
+  _and: [movies_bool_exp]
+  _not: movies_bool_exp
+  _or: [movies_bool_exp]
+  grossSalesRevenue: money_comparison_exp
+  id: uuid_comparison_exp
+  movie_actors: movie_actors_bool_exp
+  movie_directors: movie_directors_bool_exp
+  title: String_comparison_exp
+  yearProduced: Int_comparison_exp
+}
+
+# unique or primary key constraints on table "movies"
+enum movies_constraint {
+  # unique or primary key constraint
+  movies_pkey
+
+  # unique or primary key constraint
+  movies_title_key
+}
+
+# input type for incrementing integer columne in table "movies"
+input movies_inc_input {
+  yearProduced: Int
+}
+
+# input type for inserting data into table "movies"
+input movies_insert_input {
+  grossSalesRevenue: money
+  id: uuid
+  movie_actors: movie_actors_arr_rel_insert_input
+  movie_directors: movie_directors_arr_rel_insert_input
+  title: String
+  yearProduced: Int
+}
+
+# aggregate max on columns
+type movies_max_fields {
+  title: String
+  yearProduced: Int
+}
+
+# order by max() on columns of table "movies"
+input movies_max_order_by {
+  title: order_by
+  yearProduced: order_by
+}
+
+# aggregate min on columns
+type movies_min_fields {
+  title: String
+  yearProduced: Int
+}
+
+# order by min() on columns of table "movies"
+input movies_min_order_by {
+  title: order_by
+  yearProduced: order_by
+}
+
+# response of any mutation on the table "movies"
+type movies_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [movies!]!
+}
+
+# input type for inserting object relation for remote table "movies"
+input movies_obj_rel_insert_input {
+  data: movies_insert_input!
+  on_conflict: movies_on_conflict
+}
+
+# on conflict condition type for table "movies"
+input movies_on_conflict {
+  constraint: movies_constraint!
+  update_columns: [movies_update_column!]!
+}
+
+# ordering options when selecting data from "movies"
+input movies_order_by {
+  grossSalesRevenue: order_by
+  id: order_by
+  movie_actors_aggregate: movie_actors_aggregate_order_by
+  movie_directors_aggregate: movie_directors_aggregate_order_by
+  title: order_by
+  yearProduced: order_by
+}
+
+# select columns of table "movies"
+enum movies_select_column {
+  # column name
+  grossSalesRevenue
+
+  # column name
+  id
+
+  # column name
+  title
+
+  # column name
+  yearProduced
+}
+
+# input type for updating data in table "movies"
+input movies_set_input {
+  grossSalesRevenue: money
+  id: uuid
+  title: String
+  yearProduced: Int
+}
+
+# aggregate stddev on columns
+type movies_stddev_fields {
+  yearProduced: Float
+}
+
+# order by stddev() on columns of table "movies"
+input movies_stddev_order_by {
+  yearProduced: order_by
+}
+
+# aggregate stddev_pop on columns
+type movies_stddev_pop_fields {
+  yearProduced: Float
+}
+
+# order by stddev_pop() on columns of table "movies"
+input movies_stddev_pop_order_by {
+  yearProduced: order_by
+}
+
+# aggregate stddev_samp on columns
+type movies_stddev_samp_fields {
+  yearProduced: Float
+}
+
+# order by stddev_samp() on columns of table "movies"
+input movies_stddev_samp_order_by {
+  yearProduced: order_by
+}
+
+# aggregate sum on columns
+type movies_sum_fields {
+  yearProduced: Int
+}
+
+# order by sum() on columns of table "movies"
+input movies_sum_order_by {
+  yearProduced: order_by
+}
+
+# update columns of table "movies"
+enum movies_update_column {
+  # column name
+  grossSalesRevenue
+
+  # column name
+  id
+
+  # column name
+  title
+
+  # column name
+  yearProduced
+}
+
+# aggregate var_pop on columns
+type movies_var_pop_fields {
+  yearProduced: Float
+}
+
+# order by var_pop() on columns of table "movies"
+input movies_var_pop_order_by {
+  yearProduced: order_by
+}
+
+# aggregate var_samp on columns
+type movies_var_samp_fields {
+  yearProduced: Float
+}
+
+# order by var_samp() on columns of table "movies"
+input movies_var_samp_order_by {
+  yearProduced: order_by
+}
+
+# aggregate variance on columns
+type movies_variance_fields {
+  yearProduced: Float
+}
+
+# order by variance() on columns of table "movies"
+input movies_variance_order_by {
+  yearProduced: order_by
+}
+
+# mutation root
+type mutation_root {
+  # delete data from the table: "actors"
+  delete_actors(
+    # filter the rows which have to be deleted
+    where: actors_bool_exp!
+  ): actors_mutation_response
+
+  # delete data from the table: "directors"
+  delete_directors(
+    # filter the rows which have to be deleted
+    where: directors_bool_exp!
+  ): directors_mutation_response
+
+  # delete data from the table: "movie_actors"
+  delete_movie_actors(
+    # filter the rows which have to be deleted
+    where: movie_actors_bool_exp!
+  ): movie_actors_mutation_response
+
+  # delete data from the table: "movie_directors"
+  delete_movie_directors(
+    # filter the rows which have to be deleted
+    where: movie_directors_bool_exp!
+  ): movie_directors_mutation_response
+
+  # delete data from the table: "movies"
+  delete_movies(
+    # filter the rows which have to be deleted
+    where: movies_bool_exp!
+  ): movies_mutation_response
+
+  # insert data into the table: "actors"
+  insert_actors(
+    # the rows to be inserted
+    objects: [actors_insert_input!]!
+
+    # on conflict condition
+    on_conflict: actors_on_conflict
+  ): actors_mutation_response
+
+  # insert data into the table: "directors"
+  insert_directors(
+    # the rows to be inserted
+    objects: [directors_insert_input!]!
+
+    # on conflict condition
+    on_conflict: directors_on_conflict
+  ): directors_mutation_response
+
+  # insert data into the table: "movie_actors"
+  insert_movie_actors(
+    # the rows to be inserted
+    objects: [movie_actors_insert_input!]!
+
+    # on conflict condition
+    on_conflict: movie_actors_on_conflict
+  ): movie_actors_mutation_response
+
+  # insert data into the table: "movie_directors"
+  insert_movie_directors(
+    # the rows to be inserted
+    objects: [movie_directors_insert_input!]!
+
+    # on conflict condition
+    on_conflict: movie_directors_on_conflict
+  ): movie_directors_mutation_response
+
+  # insert data into the table: "movies"
+  insert_movies(
+    # the rows to be inserted
+    objects: [movies_insert_input!]!
+
+    # on conflict condition
+    on_conflict: movies_on_conflict
+  ): movies_mutation_response
+
+  # update data of the table: "actors"
+  update_actors(
+    # sets the columns of the filtered rows to the given values
+    _set: actors_set_input
+
+    # filter the rows which have to be updated
+    where: actors_bool_exp!
+  ): actors_mutation_response
+
+  # update data of the table: "directors"
+  update_directors(
+    # sets the columns of the filtered rows to the given values
+    _set: directors_set_input
+
+    # filter the rows which have to be updated
+    where: directors_bool_exp!
+  ): directors_mutation_response
+
+  # update data of the table: "movie_actors"
+  update_movie_actors(
+    # sets the columns of the filtered rows to the given values
+    _set: movie_actors_set_input
+
+    # filter the rows which have to be updated
+    where: movie_actors_bool_exp!
+  ): movie_actors_mutation_response
+
+  # update data of the table: "movie_directors"
+  update_movie_directors(
+    # sets the columns of the filtered rows to the given values
+    _set: movie_directors_set_input
+
+    # filter the rows which have to be updated
+    where: movie_directors_bool_exp!
+  ): movie_directors_mutation_response
+
+  # update data of the table: "movies"
+  update_movies(
+    # increments the integer columns with given value of the filtered values
+    _inc: movies_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: movies_set_input
+
+    # filter the rows which have to be updated
+    where: movies_bool_exp!
+  ): movies_mutation_response
+}
+
+# column ordering options
+enum order_by {
+  # in the ascending order, nulls last
+  asc
+
+  # in the ascending order, nulls first
+  asc_nulls_first
+
+  # in the ascending order, nulls last
+  asc_nulls_last
+
+  # in the descending order, nulls first
+  desc
+
+  # in the descending order, nulls first
+  desc_nulls_first
+
+  # in the descending order, nulls last
+  desc_nulls_last
+}
+
+# query root
+type query_root {
+  # fetch data from the table: "actors"
+  actors(
+    # distinct select on columns
+    distinct_on: [actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [actors_order_by!]
+
+    # filter the rows returned
+    where: actors_bool_exp
+  ): [actors!]!
+
+  # fetch aggregated fields from the table: "actors"
+  actors_aggregate(
+    # distinct select on columns
+    distinct_on: [actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [actors_order_by!]
+
+    # filter the rows returned
+    where: actors_bool_exp
+  ): actors_aggregate!
+
+  # fetch data from the table: "actors" using primary key columns
+  actors_by_pk(id: uuid!): actors
+
+  # fetch data from the table: "directors"
+  directors(
+    # distinct select on columns
+    distinct_on: [directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [directors_order_by!]
+
+    # filter the rows returned
+    where: directors_bool_exp
+  ): [directors!]!
+
+  # fetch aggregated fields from the table: "directors"
+  directors_aggregate(
+    # distinct select on columns
+    distinct_on: [directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [directors_order_by!]
+
+    # filter the rows returned
+    where: directors_bool_exp
+  ): directors_aggregate!
+
+  # fetch data from the table: "directors" using primary key columns
+  directors_by_pk(id: uuid!): directors
+
+  # fetch data from the table: "movie_actors"
+  movie_actors(
+    # distinct select on columns
+    distinct_on: [movie_actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_actors_order_by!]
+
+    # filter the rows returned
+    where: movie_actors_bool_exp
+  ): [movie_actors!]!
+
+  # fetch aggregated fields from the table: "movie_actors"
+  movie_actors_aggregate(
+    # distinct select on columns
+    distinct_on: [movie_actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_actors_order_by!]
+
+    # filter the rows returned
+    where: movie_actors_bool_exp
+  ): movie_actors_aggregate!
+
+  # fetch data from the table: "movie_actors" using primary key columns
+  movie_actors_by_pk(id: uuid!): movie_actors
+
+  # fetch data from the table: "movie_directors"
+  movie_directors(
+    # distinct select on columns
+    distinct_on: [movie_directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_directors_order_by!]
+
+    # filter the rows returned
+    where: movie_directors_bool_exp
+  ): [movie_directors!]!
+
+  # fetch aggregated fields from the table: "movie_directors"
+  movie_directors_aggregate(
+    # distinct select on columns
+    distinct_on: [movie_directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_directors_order_by!]
+
+    # filter the rows returned
+    where: movie_directors_bool_exp
+  ): movie_directors_aggregate!
+
+  # fetch data from the table: "movie_directors" using primary key columns
+  movie_directors_by_pk(id: uuid!): movie_directors
+
+  # fetch data from the table: "movies"
+  movies(
+    # distinct select on columns
+    distinct_on: [movies_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movies_order_by!]
+
+    # filter the rows returned
+    where: movies_bool_exp
+  ): [movies!]!
+
+  # fetch aggregated fields from the table: "movies"
+  movies_aggregate(
+    # distinct select on columns
+    distinct_on: [movies_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movies_order_by!]
+
+    # filter the rows returned
+    where: movies_bool_exp
+  ): movies_aggregate!
+
+  # fetch data from the table: "movies" using primary key columns
+  movies_by_pk(id: uuid!): movies
+}
+
+# expression to compare columns of type String. All fields are combined with logical 'AND'.
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String!]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
+}
+
+# subscription root
+type subscription_root {
+  # fetch data from the table: "actors"
+  actors(
+    # distinct select on columns
+    distinct_on: [actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [actors_order_by!]
+
+    # filter the rows returned
+    where: actors_bool_exp
+  ): [actors!]!
+
+  # fetch aggregated fields from the table: "actors"
+  actors_aggregate(
+    # distinct select on columns
+    distinct_on: [actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [actors_order_by!]
+
+    # filter the rows returned
+    where: actors_bool_exp
+  ): actors_aggregate!
+
+  # fetch data from the table: "actors" using primary key columns
+  actors_by_pk(id: uuid!): actors
+
+  # fetch data from the table: "directors"
+  directors(
+    # distinct select on columns
+    distinct_on: [directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [directors_order_by!]
+
+    # filter the rows returned
+    where: directors_bool_exp
+  ): [directors!]!
+
+  # fetch aggregated fields from the table: "directors"
+  directors_aggregate(
+    # distinct select on columns
+    distinct_on: [directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [directors_order_by!]
+
+    # filter the rows returned
+    where: directors_bool_exp
+  ): directors_aggregate!
+
+  # fetch data from the table: "directors" using primary key columns
+  directors_by_pk(id: uuid!): directors
+
+  # fetch data from the table: "movie_actors"
+  movie_actors(
+    # distinct select on columns
+    distinct_on: [movie_actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_actors_order_by!]
+
+    # filter the rows returned
+    where: movie_actors_bool_exp
+  ): [movie_actors!]!
+
+  # fetch aggregated fields from the table: "movie_actors"
+  movie_actors_aggregate(
+    # distinct select on columns
+    distinct_on: [movie_actors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_actors_order_by!]
+
+    # filter the rows returned
+    where: movie_actors_bool_exp
+  ): movie_actors_aggregate!
+
+  # fetch data from the table: "movie_actors" using primary key columns
+  movie_actors_by_pk(id: uuid!): movie_actors
+
+  # fetch data from the table: "movie_directors"
+  movie_directors(
+    # distinct select on columns
+    distinct_on: [movie_directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_directors_order_by!]
+
+    # filter the rows returned
+    where: movie_directors_bool_exp
+  ): [movie_directors!]!
+
+  # fetch aggregated fields from the table: "movie_directors"
+  movie_directors_aggregate(
+    # distinct select on columns
+    distinct_on: [movie_directors_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movie_directors_order_by!]
+
+    # filter the rows returned
+    where: movie_directors_bool_exp
+  ): movie_directors_aggregate!
+
+  # fetch data from the table: "movie_directors" using primary key columns
+  movie_directors_by_pk(id: uuid!): movie_directors
+
+  # fetch data from the table: "movies"
+  movies(
+    # distinct select on columns
+    distinct_on: [movies_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movies_order_by!]
+
+    # filter the rows returned
+    where: movies_bool_exp
+  ): [movies!]!
+
+  # fetch aggregated fields from the table: "movies"
+  movies_aggregate(
+    # distinct select on columns
+    distinct_on: [movies_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [movies_order_by!]
+
+    # filter the rows returned
+    where: movies_bool_exp
+  ): movies_aggregate!
+
+  # fetch data from the table: "movies" using primary key columns
+  movies_by_pk(id: uuid!): movies
+}
+
+scalar uuid
+
+# expression to compare columns of type uuid. All fields are combined with logical 'AND'.
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+
