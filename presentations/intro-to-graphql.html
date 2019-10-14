@@ -66,7 +66,7 @@
         <ul>
         <li>Compact vs full views</li>
         </ul></li>
-        <li>Versioning for evolution of endpoints</li>
+        <li>Evolution of API via versioned endpoints</li>
         <li>Weakly-typed endpoints</li>
         </ul>
         <aside class="notes">
@@ -101,8 +101,8 @@
         <section id="graphql-principles" class="slide level2">
         <h2>GraphQL Principles</h2>
         <ul>
-        <li>Hierarchical</li>
-        <li>Product-centric</li>
+        <li>Hierarchical, graph-oriented</li>
+        <li>Product-centric data requirements</li>
         <li>Client-specified queries</li>
         <li>Backwards compatible</li>
         <li>Application-layer protocol</li>
@@ -154,40 +154,58 @@
         <p>GraphQL has its own type system that’s used to define the schema of an API. The syntax for writing schemas is called Schema Definition Language (SDL).</p>
         </aside>
         </section>
+        <section id="user-defined-scalars" class="slide level2">
+        <h2>User-defined Scalars</h2>
+        <pre class="graphql"><code>
+        scalar uuid
+        
+        scalar timestamp
+        
+        scalar secureUrl
+        </code></pre>
+        <aside class="notes">
+        <p>In addition to built-in scalars, you can define your own custom scalar types. Often you need to support custom atomic data types (e.g. Date), or you want a version of an existing type that does some fine-grained validation. To enable this, GraphQL allows you to define custom scalar types. In a lot of cases you might want to check if an email, date-time or url format is valid. It is easily doable by defining your custom email/datetime/url scalars.</p>
+        </aside>
+        </section>
+        <section id="enumerations" class="slide level2">
+        <h2>Enumerations</h2>
+        <pre class="graphql"><code>
+        enum ConflictAction {
+          ignore
+          update
+        }
+        </code></pre>
+        <aside class="notes">
+        <p>Enumerations are similar to custom scalars, but their values can only be one of a pre-defined list of strings.</p>
+        </aside>
+        </section>
         <section id="object-types-and-fields" class="slide level2">
         <h2>Object Types and Fields</h2>
         <pre class="graphql"><code>     
-        type Person { 
-          name: String! 
-          age: Int! 
+        type Actor {
+          id: uuid!
+          firstName: String!
+          lastName: String!
         }
         </code></pre>
         </section>
         <section id="user-defined-object-type-field" class="slide level2">
         <h2>User-defined Object Type Field</h2>
         <pre class="graphql"><code>
-        type Post { 
-          title: String! 
-          author: Person! 
-        }
-        </code></pre>
-        </section>
-        <section id="enumerations" class="slide level2">
-        <h2>Enumerations</h2>
-        <pre class="graphql"><code>
-        enum PaymentType { 
-          SALARY
-          HOURLY
+        type ActorAggregateFields {
+          count(columns: [ActorSelectColumn!], 
+                distinct: Boolean): Int
+          max: ActorMaxFields
+          min: ActorMinFields
         }
         </code></pre>
         </section>
         <section id="lists-and-non-null" class="slide level2">
         <h2>Lists and Non-null</h2>
         <pre class="graphql"><code>
-        type Person { 
-          name: String! 
-          age: Int! 
-          posts: [Post!]!
+        type ActorsAggregate {
+          aggregate: ActorAggregateFields
+          nodes: [Actor!]!
         }
         </code></pre>
         </section>
@@ -261,6 +279,16 @@
         <section id="subscription-type" class="slide level2">
         <h2>Subscription type</h2>
         <pre class="graphql"><code></code></pre>
+        </section>
+        <section id="schema-declaration" class="slide level2">
+        <h2>Schema declaration</h2>
+        <pre class="graphql"><code>
+        schema {
+          query: query_root
+          mutation: mutation_root
+          subscription: subscription_root
+        }
+        </code></pre>
         </section>
         <section id="literature-cited" class="slide level2">
         <h2>Literature Cited</h2>

@@ -13,7 +13,7 @@ date: October 21, 2019
   - Number of fields fetched from an endpoint
 + Multiple views of the same REST endpoint 
   - Compact vs full views
-+ Versioning for evolution of endpoints
++ Evolution of API via versioned endpoints
 + Weakly-typed endpoints
 
 
@@ -59,8 +59,8 @@ Nearly all externally facing REST APIs we know of trend or end up in these non-i
 
 ## GraphQL Principles
 
-- Hierarchical
-- Product-centric
+- Hierarchical, graph-oriented
+- Product-centric data requirements
 - Client-specified queries
 - Backwards compatible
 - Application-layer protocol
@@ -115,10 +115,43 @@ The key here was treating data like a hierarchy, not a table. This was indicativ
 ## Schema Definition Language (SDL)
 
 - Strong type system
-- Schema Definition Language manifests itself in GraphQL schemas
+- Type language: Schema Definition Language (SDL)
 
 ::: notes
-GraphQL has its own type system that’s used to define the schema of an API. The syntax for writing schemas is called Schema Definition Language (SDL).
+GraphQL has its own type system that’s used to define the schema of an API. GraphQL defines its own simple language. We'll use the "GraphQL schema language" - it's similar to the query language, and allows us to talk about GraphQL schemas in a language-agnostic way. The syntax for writing schemas is called Schema Definition Language (SDL). 
+
+:::
+
+## User-defined Scalars
+
+```graphql
+
+scalar uuid
+
+scalar timestamp
+
+scalar secureUrl
+
+```
+
+:::notes
+In addition to built-in scalars, you can define your own custom scalar types. Often you need to support custom atomic data types (e.g. Date), or you want a version of an existing type that does some fine-grained validation. To enable this, GraphQL allows you to define custom scalar types. In a lot of cases you might want to check if an email, date-time or url format is valid. It is easily doable by defining your custom email/datetime/url scalars.
+:::
+
+
+## Enumerations
+
+```graphql
+
+enum ConflictAction {
+  ignore
+  update
+}
+
+```
+
+:::notes
+Enumerations are similar to custom scalars, but their values can only be one of a pre-defined list of strings.
 :::
 
 
@@ -126,9 +159,10 @@ GraphQL has its own type system that’s used to define the schema of an API. 
 
 ```graphql
      
-type Person { 
-  name: String! 
-  age: Int! 
+type Actor {
+  id: uuid!
+  firstName: String!
+  lastName: String!
 }
 
 ```
@@ -138,21 +172,11 @@ type Person {
 
 ```graphql
 
-type Post { 
-  title: String! 
-  author: Person! 
-}
-
-```
-
-
-## Enumerations
-
-```graphql
-
-enum PaymentType { 
-  SALARY
-  HOURLY
+type ActorAggregateFields {
+  count(columns: [ActorSelectColumn!], 
+        distinct: Boolean): Int
+  max: ActorMaxFields
+  min: ActorMinFields
 }
 
 ```
@@ -162,10 +186,9 @@ enum PaymentType {
 
 ```graphql
 
-type Person { 
-  name: String! 
-  age: Int! 
-  posts: [Post!]!
+type ActorsAggregate {
+  aggregate: ActorAggregateFields
+  nodes: [Actor!]!
 }
 
 ```
@@ -258,6 +281,18 @@ query {
 
 ```
 
+
+## Schema declaration
+
+```graphql
+
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+```
 
 ## Literature Cited
 
