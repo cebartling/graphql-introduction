@@ -77,10 +77,12 @@
         <div>
         <ul>
         <li class="fragment">Over-fetching superfluous data</li>
-        <li class="fragment">Multiple requests to materialize resource graphs</li>
-        <li class="fragment">Client takes on the responsibility to orchestrate fetching of nested data</li>
+        <li class="fragment">Multiple requests to materialize resource graphs
+        <ul>
+        <li class="fragment">Client is responsible for orchestrating data fetching</li>
+        </ul></li>
         <li class="fragment">Payloads tend to grow over time, resulting in over-fetching</li>
-        <li class="fragment">Code duplication to support versions</li>
+        <li class="fragment">Code duplication when supporting multiple versions</li>
         </ul>
         </div>
         <aside class="notes">
@@ -267,14 +269,14 @@
         }
         </code></pre>
         </section>
-        <section id="queries-and-mutations" class="slide level2">
-        <h2>Queries and Mutations</h2>
-        <pre class="graphql"><code>
-        schema {
-          query: Query
-          mutation: Mutation
-        }
-        </code></pre>
+        <section id="graphql-queries" class="slide level2">
+        <h2>GraphQL Queries</h2>
+        <div>
+        <ul>
+        <li class="fragment">Queries retrieve data</li>
+        <li class="fragment">Query structure mimics data structure in response</li>
+        </ul>
+        </div>
         </section>
         <section id="query-type" class="slide level2">
         <h2>Query type</h2>
@@ -298,37 +300,84 @@
         }
         </code></pre>
         </section>
+        <section id="graphql-mutations" class="slide level2">
+        <h2>GraphQL Mutations</h2>
+        <div>
+        <ul>
+        <li class="fragment">Mutations create, update, or remove data</li>
+        <li class="fragment">Typically use input types for specifying a grouping of fields</li>
+        </ul>
+        </div>
+        </section>
         <section id="mutation-type" class="slide level2">
         <h2>Mutation type</h2>
-        <pre class="graphql"><code></code></pre>
+        <pre class="graphql"><code>
+        type Mutation {
+          addBook(title: String, author: String): Book
+          removeBook(id: ID!): Boolean
+        }
+        </code></pre>
+        </section>
+        <section id="graphql-subscriptions" class="slide level2">
+        <h2>GraphQL Subscriptions</h2>
+        <div>
+        <ul>
+        <li class="fragment">Server-sent events</li>
+        <li class="fragment">Asynchronous</li>
+        <li class="fragment">Communication through WebSockets</li>
+        <li class="fragment">Server-side implementation dependent on platform</li>
+        </ul>
+        </div>
         </section>
         <section id="subscription-type" class="slide level2">
         <h2>Subscription type</h2>
-        <pre class="graphql"><code></code></pre>
+        <pre class="graphql"><code>
+        type Subscription {
+          commentAdded(input: CommentAddedSubscribeInput!): Comment
+        }
+        </code></pre>
+        </section>
+        <section id="subscription-type-1" class="slide level2">
+        <h2>Subscription type</h2>
+        <pre class="graphql"><code>
+        subscription CommentAddedSubscription(
+            $input: CommentAddedSubscribeInput!
+          ) {
+          commentAddedSubscribe(input: $input) {
+            comment {
+              id
+              commentText
+              commenter {id, firstName, lastName}
+            }
+          }
+        }
+        
+        </code></pre>
         </section>
         <section id="schema-declaration" class="slide level2">
         <h2>Schema declaration</h2>
         <pre class="graphql"><code>
         schema {
-          query: query_root
-          mutation: mutation_root
-          subscription: subscription_root
+          query: Query
+          mutation: Mutation
+          subscription: Subscription
         }
         </code></pre>
         </section>
         <section id="literature-cited" class="slide level2">
         <h2>Literature Cited</h2>
         <ul>
-        <li>https://reactjs.org/blog/2015/05/01/graphql-introduction.html</li>
-        <li>https://www.upwork.com/hiring/development/why-facebooks-graphql-language-should-be-on-your-radar/</li>
-        <li>https://www.youtube.com/watch?v=pJamhW2xPYw&amp;amp=&amp;feature=youtu.be</li>
-        <li>https://speakerdeck.com/dschafer/graphql-client-driven-development?slide=61</li>
+        <li class="fragment">https://reactjs.org/blog/2015/05/01/graphql-introduction.html</li>
+        <li class="fragment">https://www.upwork.com/hiring/development/why-facebooks-graphql-language-should-be-on-your-radar/</li>
+        <li class="fragment">https://www.youtube.com/watch?v=pJamhW2xPYw&amp;amp=&amp;feature=youtu.be</li>
+        <li class="fragment">https://speakerdeck.com/dschafer/graphql-client-driven-development?slide=61</li>
         </ul>
         </section>
         <section id="literature-cited-1" class="slide level2">
         <h2>Literature Cited</h2>
         <ul>
-        <li>https://crystallize.com/blog/better-developer-experience-with-graphql</li>
+        <li class="fragment">https://crystallize.com/blog/better-developer-experience-with-graphql</li>
+        <li class="fragment">https://graphql.org/blog/subscriptions-in-graphql-and-relay/</li>
         </ul>
         </section>
       </div>

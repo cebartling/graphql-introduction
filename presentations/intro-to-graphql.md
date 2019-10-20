@@ -30,10 +30,10 @@ Another solution to limit over-fetching is to provide multiple views – such as
 ::: incremental
 
 - Over-fetching superfluous data
-- Multiple requests to materialize resource graphs
-- Client takes on the responsibility to orchestrate fetching of nested data
++ Multiple requests to materialize resource graphs
+  - Client is responsible for orchestrating data fetching
 - Payloads tend to grow over time, resulting in over-fetching
-- Code duplication to support versions
+- Code duplication when supporting multiple versions
 
 :::
 
@@ -273,16 +273,15 @@ input ReviewInput {
 
 ```
 
-## Queries and Mutations
+## GraphQL Queries
 
-```graphql
+::: incremental
 
-schema {
-  query: Query
-  mutation: Mutation
-}
+- Queries retrieve data
+- Query structure mimics data structure in response
 
-```
+:::
+
 
 ## Query type
 
@@ -310,15 +309,66 @@ query {
 
 ```
 
+## GraphQL Mutations
+
+::: incremental
+
+- Mutations create, update, or remove data
+- Typically use input types for specifying a grouping of fields
+  
+:::
+
+
 ## Mutation type
 
 ```graphql
 
+type Mutation {
+  addBook(title: String, author: String): Book
+  removeBook(id: ID!): Boolean
+}
+
 ```
+
+## GraphQL Subscriptions
+
+::: incremental
+
+- Server-sent events
+- Asynchronous
+- Communication through WebSockets
+- Server-side implementation dependent on platform 
+
+:::
+
 
 ## Subscription type
 
 ```graphql
+
+type Subscription {
+  commentAdded(input: CommentAddedSubscribeInput!): Comment
+}
+
+```
+
+
+## Subscription type
+
+```graphql
+
+subscription CommentAddedSubscription(
+    $input: CommentAddedSubscribeInput!
+  ) {
+  commentAddedSubscribe(input: $input) {
+    comment {
+      id
+      commentText
+      commenter {id, firstName, lastName}
+    }
+  }
+}
+
 
 ```
 
@@ -328,9 +378,9 @@ query {
 ```graphql
 
 schema {
-  query: query_root
-  mutation: mutation_root
-  subscription: subscription_root
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
 }
 
 ```
@@ -346,4 +396,5 @@ schema {
 ## Literature Cited
 
 - https://crystallize.com/blog/better-developer-experience-with-graphql
+- https://graphql.org/blog/subscriptions-in-graphql-and-relay/
 

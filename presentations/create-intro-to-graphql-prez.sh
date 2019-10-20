@@ -4,6 +4,7 @@ pandoc -t revealjs \
     --template=template-revealjs.html \
     --from markdown-markdown_in_html_blocks+raw_html \
     --standalone \
+    --incremental \
     -V revealjs-url=https://revealjs.com \
     -V theme=moon \
     -V highlight=pygments \
