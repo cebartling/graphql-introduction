@@ -4,16 +4,13 @@ author: Christopher Bartling
 date: October 21, 2019
 ---
 
-## Where are we today?
-
 ## REST 
 
 + Data requirements are dictated by the server-side 
-  - Fetching complicated object graphs
-  - Number of fields fetched from an endpoint
+  - Multiple requests to fetch object graphs
 + Multiple views of the same REST endpoint 
   - Compact vs full views
-+ Evolution of API via versioned endpoints
++ API evolution via versioned endpoints
 + Weakly-typed endpoints
 
 
@@ -23,13 +20,15 @@ Fetching complicated object graphs require multiple round trips between the clie
 Another solution to limit over-fetching is to provide multiple views – such as “compact” vs “full” – of the same REST endpoint, however this coarse granularity often does not offer adequate flexibility.
 :::
 
+
 ## REST issues 
 
 - Over-fetching superfluous data
-- Under-fetching and the N+1 requests problem
+- Multiple requests to materialize resource graphs
 - Client takes on the responsibility to orchestrate fetching of nested data
 - Payloads tend to grow over time, resulting in over-fetching
 - Code duplication to support versions
+
 
 ::: notes
 Invariably fields and additional data are added to REST endpoints as the system requirements change. However, old clients also receive this additional data as well, because the data fetching specification is encoded on the server rather than the client. As result, these payloads tend to grow over time for all clients. When this becomes a problem for a system, one solution is to overlay a versioning system onto the REST endpoints. 
@@ -42,9 +41,7 @@ Overfetching: Downloading superfluous data
 Overfetching means that a client downloads more information than is actually required in the app. Imagine for example a screen that needs to display a list of users only with their names. In a REST API, this app would usually hit the /users endpoint and receive a JSON array with user data. This response however might contain more info about the users that are returned, e.g. their birthdays or addresses - information that is useless for the client because it only needs to display the users’ names.
 
 Underfetching and the n+1 problem
-Another issue is underfetching and the n+1-requests problem. Underfetching generally means that a specific endpoint doesn’t provide enough of the required information. The client will have to make additional requests to fetch everything it needs. This can escalate to a situation where a client needs to first download a list of elements, but then needs to make one additional request per element to fetch the required data.
-As an example, consider the same app would also need to display the last three followers per user. The API provides the additional endpoint /users/<user-id>/followers. In order to be able to display the required information, the app will have to make one request to the /users endpoint and then hit the /users/<user-id>/followers endpoint for each user.
-
+Another issue is underfetching and the n+1-requests problem. Underfetching generally means that a specific endpoint doesn’t provide enough of the required information. The client will have to make additional requests to fetch everything it needs. This can escalate to a situation where a client needs to first download a list of elements, but then needs to make one additional request per element to fetch the required data. As an example, consider the same app would also need to display the last three followers per user. The API provides the additional endpoint /users/<user-id>/followers. In order to be able to display the required information, the app will have to make one request to the /users endpoint and then hit the /users/<user-id>/followers endpoint for each user.
 
 Versioning also complicates a server, and results in code duplication, spaghetti code, or a sophisticated, hand-rolled infrastructure to manage it.
 
@@ -55,7 +52,6 @@ Many of these attributes are linked to the fact that “REST is intended for lon
 Nearly all externally facing REST APIs we know of trend or end up in these non-ideal states, as well as nearly all internal REST APIs. The consequences of opaqueness and over-fetching are more severe in internal APIs since their velocity of change and level of usage is almost always higher.
 :::
 
-## Why GraphQL?
 
 ## GraphQL Principles
 
@@ -94,6 +90,7 @@ Introspective: GraphQL is introspective. Clients and tools can query the type s
 - Avoid aggregating data manually
 - Avoid over-fetching and under-fetching data
 
+
 ::: notes
 With GraphQL, there's no need to call multiple endpoints from the client or aggregate the data manually like you have to with traditional REST data fetching. Instead, you specify the exact data you need and GraphQL gives you exactly what you asked for.
 
@@ -105,12 +102,27 @@ The key here was treating data like a hierarchy, not a table. This was indicativ
 
 ## Developer Experience
 
++ GraphQL delivers better developer experience with...
+  -  a self describing API which can be introspected by tooling
+  -  query and mutation input validation 
+  -  query facilities that aggregate data on the server-side
+
+
+::: notes
+:::
+
 
 ## Performance Improvements
 
++ GraphQL delivers better performance by...
+  - reducing the number of requests for a data graph
+  - aggregating the data graph on the server-side
+  - only sending the data fields requested 
 
 
-## What is GraphQL?
+::: notes
+:::
+
 
 ## Schema Definition Language (SDL)
 
@@ -300,4 +312,9 @@ schema {
 - https://www.upwork.com/hiring/development/why-facebooks-graphql-language-should-be-on-your-radar/
 - https://www.youtube.com/watch?v=pJamhW2xPYw&amp=&feature=youtu.be
 - https://speakerdeck.com/dschafer/graphql-client-driven-development?slide=61
+
+
+## Literature Cited
+
+- https://crystallize.com/blog/better-developer-experience-with-graphql
 

@@ -51,22 +51,18 @@
         </section>
 
         
-        <section id="where-are-we-today" class="slide level2">
-        <h2>Where are we today?</h2>
-        </section>
         <section id="rest" class="slide level2">
         <h2>REST</h2>
         <ul>
         <li>Data requirements are dictated by the server-side
         <ul>
-        <li>Fetching complicated object graphs</li>
-        <li>Number of fields fetched from an endpoint</li>
+        <li>Multiple requests to fetch object graphs</li>
         </ul></li>
         <li>Multiple views of the same REST endpoint
         <ul>
         <li>Compact vs full views</li>
         </ul></li>
-        <li>Evolution of API via versioned endpoints</li>
+        <li>API evolution via versioned endpoints</li>
         <li>Weakly-typed endpoints</li>
         </ul>
         <aside class="notes">
@@ -78,7 +74,7 @@
         <h2>REST issues</h2>
         <ul>
         <li>Over-fetching superfluous data</li>
-        <li>Under-fetching and the N+1 requests problem</li>
+        <li>Multiple requests to materialize resource graphs</li>
         <li>Client takes on the responsibility to orchestrate fetching of nested data</li>
         <li>Payloads tend to grow over time, resulting in over-fetching</li>
         <li>Code duplication to support versions</li>
@@ -94,9 +90,6 @@
         <p>Many of these attributes are linked to the fact that “REST is intended for long-lived network-based applications that span multiple organizations” according to its inventor. This is not a requirement for APIs that serve a client app built within the same organization.</p>
         <p>Nearly all externally facing REST APIs we know of trend or end up in these non-ideal states, as well as nearly all internal REST APIs. The consequences of opaqueness and over-fetching are more severe in internal APIs since their velocity of change and level of usage is almost always higher.</p>
         </aside>
-        </section>
-        <section id="why-graphql" class="slide level2">
-        <h2>Why GraphQL?</h2>
         </section>
         <section id="graphql-principles" class="slide level2">
         <h2>GraphQL Principles</h2>
@@ -137,21 +130,40 @@
         </section>
         <section id="developer-experience" class="slide level2">
         <h2>Developer Experience</h2>
+        <ul>
+        <li>GraphQL delivers better developer experience with…
+        <ul>
+        <li>a self describing API which can be introspected by tooling</li>
+        <li>query and mutation input validation</li>
+        <li>query facilities that aggregate data on the server-side</li>
+        </ul></li>
+        </ul>
+        <aside class="notes">
+        
+        </aside>
         </section>
         <section id="performance-improvements" class="slide level2">
         <h2>Performance Improvements</h2>
-        </section>
-        <section id="what-is-graphql" class="slide level2">
-        <h2>What is GraphQL?</h2>
+        <ul>
+        <li>GraphQL delivers better performance by…
+        <ul>
+        <li>reducing the number of requests for a data graph</li>
+        <li>aggregating the data graph on the server-side</li>
+        <li>only sending the data fields requested</li>
+        </ul></li>
+        </ul>
+        <aside class="notes">
+        
+        </aside>
         </section>
         <section id="schema-definition-language-sdl" class="slide level2">
         <h2>Schema Definition Language (SDL)</h2>
         <ul>
         <li>Strong type system</li>
-        <li>Schema Definition Language manifests itself in GraphQL schemas</li>
+        <li>Type language: Schema Definition Language (SDL)</li>
         </ul>
         <aside class="notes">
-        <p>GraphQL has its own type system that’s used to define the schema of an API. The syntax for writing schemas is called Schema Definition Language (SDL).</p>
+        <p>GraphQL has its own type system that’s used to define the schema of an API. GraphQL defines its own simple language. We’ll use the “GraphQL schema language” - it’s similar to the query language, and allows us to talk about GraphQL schemas in a language-agnostic way. The syntax for writing schemas is called Schema Definition Language (SDL).</p>
         </aside>
         </section>
         <section id="user-defined-scalars" class="slide level2">
@@ -297,6 +309,12 @@
         <li>https://www.upwork.com/hiring/development/why-facebooks-graphql-language-should-be-on-your-radar/</li>
         <li>https://www.youtube.com/watch?v=pJamhW2xPYw&amp;amp=&amp;feature=youtu.be</li>
         <li>https://speakerdeck.com/dschafer/graphql-client-driven-development?slide=61</li>
+        </ul>
+        </section>
+        <section id="literature-cited-1" class="slide level2">
+        <h2>Literature Cited</h2>
+        <ul>
+        <li>https://crystallize.com/blog/better-developer-experience-with-graphql</li>
         </ul>
         </section>
       </div>
