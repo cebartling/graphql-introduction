@@ -313,10 +313,23 @@
         <h2>Mutation type</h2>
         <pre class="graphql"><code>
         type Mutation {
-          addBook(title: String, author: String): Book
+          addBook(input: AddBookInput!): Book
           removeBook(id: ID!): Boolean
         }
         </code></pre>
+        </section>
+        <section id="mutation-example" class="slide level2">
+        <h2>Mutation example</h2>
+        <pre class="graphql"><code>
+        mutation AddBook($input: AddBookInput!) {
+          addBook(input: $input) {
+            id
+          }
+        }
+        </code></pre>
+        <ul>
+        <li class="fragment">Input is bound to variables in client</li>
+        </ul>
         </section>
         <section id="graphql-subscriptions" class="slide level2">
         <h2>GraphQL Subscriptions</h2>

@@ -324,11 +324,26 @@ query {
 ```graphql
 
 type Mutation {
-  addBook(title: String, author: String): Book
+  addBook(input: AddBookInput!): Book
   removeBook(id: ID!): Boolean
 }
 
 ```
+
+## Mutation example 
+
+```graphql
+
+mutation AddBook($input: AddBookInput!) {
+  addBook(input: $input) {
+    id
+  }
+}
+
+```
+
+- Input is bound to variables in client
+
 
 ## GraphQL Subscriptions
 
