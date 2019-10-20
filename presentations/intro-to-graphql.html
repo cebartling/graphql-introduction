@@ -53,18 +53,20 @@
         
         <section id="rest" class="slide level2">
         <h2>REST</h2>
+        <div>
         <ul>
-        <li>Data requirements are dictated by the server-side
+        <li class="fragment">Data requirements are dictated by the server-side
         <ul>
-        <li>Multiple requests to fetch object graphs</li>
+        <li class="fragment">Multiple requests to fetch object graphs</li>
         </ul></li>
-        <li>Multiple views of the same REST endpoint
+        <li class="fragment">Multiple views of the same REST endpoint
         <ul>
-        <li>Compact vs full views</li>
+        <li class="fragment">Compact vs full views</li>
         </ul></li>
-        <li>API evolution via versioned endpoints</li>
-        <li>Weakly-typed endpoints</li>
+        <li class="fragment">API evolution via versioned endpoints</li>
+        <li class="fragment">Weakly-typed endpoints</li>
         </ul>
+        </div>
         <aside class="notes">
         <p>Fetching complicated object graphs require multiple round trips between the client and server to render single views. For mobile applications operating in variable network conditions, these multiple roundtrips are highly undesirable.</p>
         <p>Another solution to limit over-fetching is to provide multiple views – such as “compact” vs “full” – of the same REST endpoint, however this coarse granularity often does not offer adequate flexibility.</p>
@@ -72,13 +74,15 @@
         </section>
         <section id="rest-issues" class="slide level2">
         <h2>REST issues</h2>
+        <div>
         <ul>
-        <li>Over-fetching superfluous data</li>
-        <li>Multiple requests to materialize resource graphs</li>
-        <li>Client takes on the responsibility to orchestrate fetching of nested data</li>
-        <li>Payloads tend to grow over time, resulting in over-fetching</li>
-        <li>Code duplication to support versions</li>
+        <li class="fragment">Over-fetching superfluous data</li>
+        <li class="fragment">Multiple requests to materialize resource graphs</li>
+        <li class="fragment">Client takes on the responsibility to orchestrate fetching of nested data</li>
+        <li class="fragment">Payloads tend to grow over time, resulting in over-fetching</li>
+        <li class="fragment">Code duplication to support versions</li>
         </ul>
+        </div>
         <aside class="notes">
         <p>Invariably fields and additional data are added to REST endpoints as the system requirements change. However, old clients also receive this additional data as well, because the data fetching specification is encoded on the server rather than the client. As result, these payloads tend to grow over time for all clients. When this becomes a problem for a system, one solution is to overlay a versioning system onto the REST endpoints.</p>
         <p>However, fetching this data correctly must be carefully done in order to provide a satisfactory user experience. Your application needs to retrieve only the data that it actually needs in a single round trip or else risk poor performance. In addition, your application might come in several different versions, or be used on several different devices, and needs to maintain its level of performance as updates are rolled out and additional features are added. All of these factors heighten the complexity involved in designing a modern web or phone application that relies on accessing external data stores.</p>
@@ -93,15 +97,17 @@
         </section>
         <section id="graphql-principles" class="slide level2">
         <h2>GraphQL Principles</h2>
+        <div>
         <ul>
-        <li>Hierarchical, graph-oriented</li>
-        <li>Product-centric data requirements</li>
-        <li>Client-specified queries</li>
-        <li>Backwards compatible</li>
-        <li>Application-layer protocol</li>
-        <li>Strongly-typed</li>
-        <li>Introspective</li>
+        <li class="fragment">Hierarchical, graph-oriented</li>
+        <li class="fragment">Product-centric data requirements</li>
+        <li class="fragment">Client-specified queries</li>
+        <li class="fragment">Backwards compatible</li>
+        <li class="fragment">Application-layer protocol</li>
+        <li class="fragment">Strongly-typed</li>
+        <li class="fragment">Introspective</li>
         </ul>
+        </div>
         <aside class="notes">
         <p>Most products deal in the creation and manipulation of view hierarchies. GraphQL queries model themselves as a hierarchical set of fields. The query is shaped just like the data it returns. It is a natural way for product engineers to describe data requirements.</p>
         <p>GraphQL is unapologetically driven by the requirements of views and the front-end engineers that write them. We start with their way of thinking and requirements and build the language and runtime necessary to enable that.</p>
@@ -114,14 +120,16 @@
         </section>
         <section id="declarative-data-fetching" class="slide level2">
         <h2>Declarative Data Fetching</h2>
+        <div>
         <ul>
-        <li>Query language to satisfy data requirements for the client</li>
-        <li>Client defines what will be included in the query response, not the server</li>
-        <li>Data requirements are specified as a hierarchy of fields</li>
-        <li>Avoid calling multiple endpoints</li>
-        <li>Avoid aggregating data manually</li>
-        <li>Avoid over-fetching and under-fetching data</li>
+        <li class="fragment">Query language to satisfy data requirements for the client</li>
+        <li class="fragment">Client defines what will be included in the query response, not the server</li>
+        <li class="fragment">Data requirements are specified as a hierarchy of fields</li>
+        <li class="fragment">Avoid calling multiple endpoints</li>
+        <li class="fragment">Avoid aggregating data manually</li>
+        <li class="fragment">Avoid over-fetching and under-fetching data</li>
         </ul>
+        </div>
         <aside class="notes">
         <p>With GraphQL, there’s no need to call multiple endpoints from the client or aggregate the data manually like you have to with traditional REST data fetching. Instead, you specify the exact data you need and GraphQL gives you exactly what you asked for.</p>
         <p>In GraphQL a single query is sent to the GraphQL server that includes the concrete data requirements as a hierarchy of fields. The server then responds with a JSON object where these requirements are fulfilled.</p>
@@ -130,38 +138,44 @@
         </section>
         <section id="developer-experience" class="slide level2">
         <h2>Developer Experience</h2>
+        <div>
         <ul>
-        <li>GraphQL delivers better developer experience with…
+        <li class="fragment">GraphQL delivers better developer experience with…
         <ul>
-        <li>a self describing API which can be introspected by tooling</li>
-        <li>query and mutation input validation</li>
-        <li>query facilities that aggregate data on the server-side</li>
+        <li class="fragment">a self describing API which can be introspected by tooling</li>
+        <li class="fragment">query and mutation input validation</li>
+        <li class="fragment">query facilities that aggregate data on the server-side</li>
         </ul></li>
         </ul>
+        </div>
         <aside class="notes">
         
         </aside>
         </section>
         <section id="performance-improvements" class="slide level2">
         <h2>Performance Improvements</h2>
+        <div>
         <ul>
-        <li>GraphQL delivers better performance by…
+        <li class="fragment">GraphQL delivers better performance by…
         <ul>
-        <li>reducing the number of requests for a data graph</li>
-        <li>aggregating the data graph on the server-side</li>
-        <li>only sending the data fields requested</li>
+        <li class="fragment">reducing the number of requests for a data graph</li>
+        <li class="fragment">aggregating the data graph on the server-side</li>
+        <li class="fragment">only sending the data fields requested</li>
         </ul></li>
         </ul>
+        </div>
         <aside class="notes">
         
         </aside>
         </section>
         <section id="schema-definition-language-sdl" class="slide level2">
         <h2>Schema Definition Language (SDL)</h2>
+        <div>
         <ul>
-        <li>Strong type system</li>
-        <li>Type language: Schema Definition Language (SDL)</li>
+        <li class="fragment">Strong type system</li>
+        <li class="fragment">Type language: Schema Definition Language (SDL)</li>
         </ul>
+        </div>
         <aside class="notes">
         <p>GraphQL has its own type system that’s used to define the schema of an API. GraphQL defines its own simple language. We’ll use the “GraphQL schema language” - it’s similar to the query language, and allows us to talk about GraphQL schemas in a language-agnostic way. The syntax for writing schemas is called Schema Definition Language (SDL).</p>
         </aside>

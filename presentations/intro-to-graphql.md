@@ -6,12 +6,16 @@ date: October 21, 2019
 
 ## REST 
 
+::: incremental
+
 + Data requirements are dictated by the server-side 
   - Multiple requests to fetch object graphs
 + Multiple views of the same REST endpoint 
   - Compact vs full views
 + API evolution via versioned endpoints
 + Weakly-typed endpoints
+
+:::
 
 
 ::: notes
@@ -23,11 +27,15 @@ Another solution to limit over-fetching is to provide multiple views – such as
 
 ## REST issues 
 
+::: incremental
+
 - Over-fetching superfluous data
 - Multiple requests to materialize resource graphs
 - Client takes on the responsibility to orchestrate fetching of nested data
 - Payloads tend to grow over time, resulting in over-fetching
 - Code duplication to support versions
+
+:::
 
 
 ::: notes
@@ -55,6 +63,8 @@ Nearly all externally facing REST APIs we know of trend or end up in these non-i
 
 ## GraphQL Principles
 
+::: incremental
+
 - Hierarchical, graph-oriented
 - Product-centric data requirements
 - Client-specified queries
@@ -62,6 +72,8 @@ Nearly all externally facing REST APIs we know of trend or end up in these non-i
 - Application-layer protocol
 - Strongly-typed
 - Introspective
+
+:::
 
 
 ::: notes
@@ -83,12 +95,16 @@ Introspective: GraphQL is introspective. Clients and tools can query the type s
 
 ## Declarative Data Fetching
 
+::: incremental
+
 - Query language to satisfy data requirements for the client
 - Client defines what will be included in the query response, not the server
 - Data requirements are specified as a hierarchy of fields
 - Avoid calling multiple endpoints 
 - Avoid aggregating data manually
 - Avoid over-fetching and under-fetching data
+
+:::
 
 
 ::: notes
@@ -102,10 +118,14 @@ The key here was treating data like a hierarchy, not a table. This was indicativ
 
 ## Developer Experience
 
+::: incremental
+
 + GraphQL delivers better developer experience with...
   -  a self describing API which can be introspected by tooling
   -  query and mutation input validation 
   -  query facilities that aggregate data on the server-side
+
+:::
 
 
 ::: notes
@@ -114,10 +134,14 @@ The key here was treating data like a hierarchy, not a table. This was indicativ
 
 ## Performance Improvements
 
+::: incremental
+
 + GraphQL delivers better performance by...
   - reducing the number of requests for a data graph
   - aggregating the data graph on the server-side
   - only sending the data fields requested 
+
+:::
 
 
 ::: notes
@@ -126,8 +150,13 @@ The key here was treating data like a hierarchy, not a table. This was indicativ
 
 ## Schema Definition Language (SDL)
 
+::: incremental
+
 - Strong type system
 - Type language: Schema Definition Language (SDL)
+
+:::
+
 
 ::: notes
 GraphQL has its own type system that’s used to define the schema of an API. GraphQL defines its own simple language. We'll use the "GraphQL schema language" - it's similar to the query language, and allows us to talk about GraphQL schemas in a language-agnostic way. The syntax for writing schemas is called Schema Definition Language (SDL). 
