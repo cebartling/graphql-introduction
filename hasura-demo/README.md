@@ -13,6 +13,8 @@
 
 ### Movie with reviews and actors
 
+#### Query
+
 ```graphql
 query MovieAndReviewsQuery($title: String!) {
   movies(where: {title: {_like: $title}}) {
@@ -36,7 +38,7 @@ query MovieAndReviewsQuery($title: String!) {
 }
 ```
 
-Query variables
+#### Query variables
 
 ```json
 {"title": "Good%"}
@@ -44,6 +46,8 @@ Query variables
 
 
 ### Movie with reviews and actors and aggregate counts
+
+#### Query
 
 ```graphql
 query MovieAndReviewsQueryWithCounts($title: String!) {
@@ -78,8 +82,39 @@ query MovieAndReviewsQueryWithCounts($title: String!) {
 }
 ```
 
-Query variables
+#### Query variables
 
 ```json
 {"title": "Taxi Driver"}
 ```
+
+## Mutations
+
+### Add a review
+
+#### Mutation
+
+```graphql
+mutation AddMovieReview($input: [reviews_insert_input!]!) {
+  insert_reviews(objects: $input) {
+    affected_rows
+    returning {
+      id
+    }
+  }
+}
+```
+
+#### Mutation variables
+
+```json
+{
+  "input": [
+    {
+        "movie_id": "31b90a96-b73a-40dc-8d71-ea059a491070", 
+        "comment": "Joe Pesci's character is psycho!"
+    }
+  ]
+}
+```
+
