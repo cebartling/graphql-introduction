@@ -400,6 +400,34 @@ schema {
 
 ```
 
+
+## Clients and Servers
+
++ Apollo Group
+  - Apollo Client (JavaScript, iOS, Android)
+  - Apollo Server (Node.js)
+- Relay (https://relay.dev/)
+- Prisma (https://www.prisma.io/)
+
+
+
+## Tools
+
++ Insomnia
+  - https://insomnia.rest/graphql/
++ Altair
+  - https://altair.sirmuel.design/
+
+
+
+## Recommended reading
+
++ Principled GraphQL
+  - https://principledgraphql.com/
+
+
+
+
 ## Literature Cited
 
 - https://reactjs.org/blog/2015/05/01/graphql-introduction.html
@@ -412,4 +440,7 @@ schema {
 
 - https://crystallize.com/blog/better-developer-experience-with-graphql
 - https://graphql.org/blog/subscriptions-in-graphql-and-relay/
+
+
+## This presentation
 
