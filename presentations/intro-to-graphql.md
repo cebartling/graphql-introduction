@@ -401,13 +401,16 @@ schema {
 ```
 
 
-## Clients and Servers
+## Server implementations
 
-+ Apollo Group
-  - Apollo Client (JavaScript, iOS, Android)
-  - Apollo Server (Node.js)
+- Apollo Server (Node.js)
+- 
+
+
+## Clients
+
+- Apollo Client (JavaScript, iOS, Android)
 - Relay (https://relay.dev/)
-- Prisma (https://www.prisma.io/)
 
 
 
@@ -424,6 +427,14 @@ schema {
 
 + Principled GraphQL
   - https://principledgraphql.com/
++ Production Ready GraphQL
+  - https://productionreadygraphql.com/  
++ The GraphQL Guide
+  - https://graphql.guide/
+
+
+
+## This presentation
 
 
 
@@ -442,5 +453,5 @@ schema {
 - https://graphql.org/blog/subscriptions-in-graphql-and-relay/
 
 
-## This presentation
+
 
