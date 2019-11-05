@@ -1,12 +1,10 @@
 ---
 title: Introduction to GraphQL
 author: Christopher Bartling
-date: October 21, 2019
+date: November 6, 2019
 ---
 
 ## REST 
-
-::: incremental
 
 + Data requirements are dictated by the server-side 
   - Multiple requests to fetch object graphs
@@ -14,8 +12,6 @@ date: October 21, 2019
   - Compact vs full views
 + API evolution via versioned endpoints
 + Weakly-typed endpoints
-
-:::
 
 
 ::: notes
@@ -27,15 +23,13 @@ Another solution to limit over-fetching is to provide multiple views – such as
 
 ## REST issues 
 
-::: incremental
-
 - Over-fetching superfluous data
 + Multiple requests to materialize resource graphs
-  - Client is responsible for orchestrating data fetching
+  - Client takes responsibility for orchestrating data fetching and assembling data graph
 - Payloads tend to grow over time, resulting in over-fetching
-- Code duplication when supporting multiple versions
+- Code duplication can occur when supporting multiple versions (server-side)
+- Client changes when new versions of endpoints are rolled out
 
-:::
 
 
 ::: notes
@@ -51,7 +45,7 @@ Overfetching means that a client downloads more information than is actually re
 Underfetching and the n+1 problem
 Another issue is underfetching and the n+1-requests problem. Underfetching generally means that a specific endpoint doesn’t provide enough of the required information. The client will have to make additional requests to fetch everything it needs. This can escalate to a situation where a client needs to first download a list of elements, but then needs to make one additional request per element to fetch the required data. As an example, consider the same app would also need to display the last three followers per user. The API provides the additional endpoint /users/<user-id>/followers. In order to be able to display the required information, the app will have to make one request to the /users endpoint and then hit the /users/<user-id>/followers endpoint for each user.
 
-Versioning also complicates a server, and results in code duplication, spaghetti code, or a sophisticated, hand-rolled infrastructure to manage it.
+Versioning also complicates a server, and results in code duplication, spaghetti code, or a sophisticated, hand-rolled infrastructure to manage it. Versioning also complicates the client, 
 
 REST endpoints are usually weakly-typed and lack machine-readable metadata. While there is much debate about the merits of strong- versus weak-typing in distributed systems, we believe in strong typing because of the correctness guarantees and tooling opportunities it provides. Developers deal with systems that lack this metadata by inspecting frequently out-of-date documentation and then writing code against the documentation.
 
@@ -118,14 +112,12 @@ The key here was treating data like a hierarchy, not a table. This was indicativ
 
 ## Developer Experience
 
-::: incremental
-
 + GraphQL delivers better developer experience with...
-  -  a self describing API which can be introspected by tooling
+  -  a self describing API which can be introspected by tooling and tooling can then validate against schema
   -  query and mutation input validation 
   -  query facilities that aggregate data on the server-side
+  -  no need for versioning; query resolvers are independent of one another
 
-:::
 
 
 ::: notes
@@ -134,14 +126,12 @@ The key here was treating data like a hierarchy, not a table. This was indicativ
 
 ## Performance Improvements
 
-::: incremental
-
 + GraphQL delivers better performance by...
+  - multiple independent queries can be sent in a single HTTP request
   - reducing the number of requests for a data graph
-  - aggregating the data graph on the server-side
+  - aggregating the data graph on the server-side, potentially across service boundaries
   - only sending the data fields requested 
 
-:::
 
 
 ::: notes
@@ -150,49 +140,33 @@ The key here was treating data like a hierarchy, not a table. This was indicativ
 
 ## Schema Definition Language (SDL)
 
-::: incremental
-
 - Strong type system
+- Type system == GOOD!
 - Type language: Schema Definition Language (SDL)
-
-:::
+- GraphQL schema can be introspected by tools and runtimes
 
 
 ::: notes
 GraphQL has its own type system that’s used to define the schema of an API. GraphQL defines its own simple language. We'll use the "GraphQL schema language" - it's similar to the query language, and allows us to talk about GraphQL schemas in a language-agnostic way. The syntax for writing schemas is called Schema Definition Language (SDL). 
 
+The more you can control typing in your application and API, the more stable your software will be in general.
+
 :::
+
+
 
 ## User-defined Scalars
 
 ```graphql
 
 scalar uuid
-
 scalar timestamp
-
 scalar secureUrl
 
 ```
 
 :::notes
 In addition to built-in scalars, you can define your own custom scalar types. Often you need to support custom atomic data types (e.g. Date), or you want a version of an existing type that does some fine-grained validation. To enable this, GraphQL allows you to define custom scalar types. In a lot of cases you might want to check if an email, date-time or url format is valid. It is easily doable by defining your custom email/datetime/url scalars.
-:::
-
-
-## Enumerations
-
-```graphql
-
-enum ConflictAction {
-  ignore
-  update
-}
-
-```
-
-:::notes
-Enumerations are similar to custom scalars, but their values can only be one of a pre-defined list of strings.
 :::
 
 
@@ -221,6 +195,22 @@ type ActorAggregateFields {
 }
 
 ```
+
+
+## Enumerations
+
+```graphql
+
+enum ConflictAction {
+  ignore
+  update
+}
+
+```
+
+:::notes
+Enumerations are similar to custom scalars, but their values can only be one of a pre-defined list of strings.
+:::
 
 
 ## Lists and Non-null
@@ -403,23 +393,38 @@ schema {
 
 ## Server implementations
 
-- Apollo Server (Node.js)
-- 
++ Apollo Server (Node.js)
+  - https://www.apollographql.com/docs/apollo-server/ 
++ GraphQL Ruby (Ruby/RoR)
+  - https://graphql-ruby.org/
++ GraphQL Java (Java)
+  - https://www.graphql-java.com/  
++ GraphQL .NET (.NET)
+  - https://graphql-dotnet.github.io/
 
 
 ## Clients
 
-- Apollo Client (JavaScript, iOS, Android)
-- Relay (https://relay.dev/)
-
++ Apollo Client (JavaScript)
+  - https://www.apollographql.com/docs/react/
++ Relay Modern (JavaScript/React)
+  - (https://relay.dev/)
++ Apollo Client (iOS)
+  - https://www.apollographql.com/docs/ios/
++ Apollo Client (Android)
+  - https://github.com/apollographql/apollo-android
 
 
 ## Tools
 
++ graphql-tools
+  - https://www.apollographql.com/docs/graphql-tools/
 + Insomnia
   - https://insomnia.rest/graphql/
 + Altair
   - https://altair.sirmuel.design/
++ Postman
+  - https://learning.getpostman.com/docs/postman/sending-api-requests/graphql/  
 
 
 
@@ -431,12 +436,14 @@ schema {
   - https://productionreadygraphql.com/  
 + The GraphQL Guide
   - https://graphql.guide/
++ Awesome list of GraphQL and Relay
+  - https://github.com/chentsulin/awesome-graphql  
 
 
 
 ## This presentation
 
-
+- https://github.com/cebartling/graphql-introduction
 
 
 ## Literature Cited
@@ -451,6 +458,7 @@ schema {
 
 - https://crystallize.com/blog/better-developer-experience-with-graphql
 - https://graphql.org/blog/subscriptions-in-graphql-and-relay/
+- https://blog.echobind.com/8-business-reasons-to-adopt-graphql-and-apollo-server-c2e0e9655310
 
 
 

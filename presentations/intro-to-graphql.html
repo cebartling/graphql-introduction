@@ -46,14 +46,13 @@
           <h3>Introduction to GraphQL</h3>
                       <h4>Christopher Bartling</h4>
                     <p>
-            <h5>October 21, 2019</h5>
+            <h5>November 6, 2019</h5>
           </p>
         </section>
 
         
         <section id="rest" class="slide level2">
         <h2>REST</h2>
-        <div>
         <ul>
         <li class="fragment">Data requirements are dictated by the server-side
         <ul>
@@ -66,7 +65,6 @@
         <li class="fragment">API evolution via versioned endpoints</li>
         <li class="fragment">Weakly-typed endpoints</li>
         </ul>
-        </div>
         <aside class="notes">
         <p>Fetching complicated object graphs require multiple round trips between the client and server to render single views. For mobile applications operating in variable network conditions, these multiple roundtrips are highly undesirable.</p>
         <p>Another solution to limit over-fetching is to provide multiple views – such as “compact” vs “full” – of the same REST endpoint, however this coarse granularity often does not offer adequate flexibility.</p>
@@ -74,24 +72,23 @@
         </section>
         <section id="rest-issues" class="slide level2">
         <h2>REST issues</h2>
-        <div>
         <ul>
         <li class="fragment">Over-fetching superfluous data</li>
         <li class="fragment">Multiple requests to materialize resource graphs
         <ul>
-        <li class="fragment">Client is responsible for orchestrating data fetching</li>
+        <li class="fragment">Client takes responsibility for orchestrating data fetching and assembling data graph</li>
         </ul></li>
         <li class="fragment">Payloads tend to grow over time, resulting in over-fetching</li>
-        <li class="fragment">Code duplication when supporting multiple versions</li>
+        <li class="fragment">Code duplication can occur when supporting multiple versions (server-side)</li>
+        <li class="fragment">Client changes when new versions of endpoints are rolled out</li>
         </ul>
-        </div>
         <aside class="notes">
         <p>Invariably fields and additional data are added to REST endpoints as the system requirements change. However, old clients also receive this additional data as well, because the data fetching specification is encoded on the server rather than the client. As result, these payloads tend to grow over time for all clients. When this becomes a problem for a system, one solution is to overlay a versioning system onto the REST endpoints.</p>
         <p>However, fetching this data correctly must be carefully done in order to provide a satisfactory user experience. Your application needs to retrieve only the data that it actually needs in a single round trip or else risk poor performance. In addition, your application might come in several different versions, or be used on several different devices, and needs to maintain its level of performance as updates are rolled out and additional features are added. All of these factors heighten the complexity involved in designing a modern web or phone application that relies on accessing external data stores.</p>
         <p>One of the most common problems with REST is that of over- and underfetching. This happens because the only way for a client to download data is by hitting endpoints that return fixed data structures. It’s very difficult to design the API in a way that it’s able to provide clients with their exact data needs.</p>
         <p>Overfetching: Downloading superfluous data Overfetching means that a client downloads more information than is actually required in the app. Imagine for example a screen that needs to display a list of users only with their names. In a REST API, this app would usually hit the /users endpoint and receive a JSON array with user data. This response however might contain more info about the users that are returned, e.g. their birthdays or addresses - information that is useless for the client because it only needs to display the users’ names.</p>
         <p>Underfetching and the n+1 problem Another issue is underfetching and the n+1-requests problem. Underfetching generally means that a specific endpoint doesn’t provide enough of the required information. The client will have to make additional requests to fetch everything it needs. This can escalate to a situation where a client needs to first download a list of elements, but then needs to make one additional request per element to fetch the required data. As an example, consider the same app would also need to display the last three followers per user. The API provides the additional endpoint /users/<user-id>/followers. In order to be able to display the required information, the app will have to make one request to the /users endpoint and then hit the /users/<user-id>/followers endpoint for each user.</p>
-        <p>Versioning also complicates a server, and results in code duplication, spaghetti code, or a sophisticated, hand-rolled infrastructure to manage it.</p>
+        <p>Versioning also complicates a server, and results in code duplication, spaghetti code, or a sophisticated, hand-rolled infrastructure to manage it. Versioning also complicates the client,</p>
         <p>REST endpoints are usually weakly-typed and lack machine-readable metadata. While there is much debate about the merits of strong- versus weak-typing in distributed systems, we believe in strong typing because of the correctness guarantees and tooling opportunities it provides. Developers deal with systems that lack this metadata by inspecting frequently out-of-date documentation and then writing code against the documentation.</p>
         <p>Many of these attributes are linked to the fact that “REST is intended for long-lived network-based applications that span multiple organizations” according to its inventor. This is not a requirement for APIs that serve a client app built within the same organization.</p>
         <p>Nearly all externally facing REST APIs we know of trend or end up in these non-ideal states, as well as nearly all internal REST APIs. The consequences of opaqueness and over-fetching are more severe in internal APIs since their velocity of change and level of usage is almost always higher.</p>
@@ -140,71 +137,56 @@
         </section>
         <section id="developer-experience" class="slide level2">
         <h2>Developer Experience</h2>
-        <div>
         <ul>
         <li class="fragment">GraphQL delivers better developer experience with…
         <ul>
-        <li class="fragment">a self describing API which can be introspected by tooling</li>
+        <li class="fragment">a self describing API which can be introspected by tooling and tooling can then validate against schema</li>
         <li class="fragment">query and mutation input validation</li>
         <li class="fragment">query facilities that aggregate data on the server-side</li>
+        <li class="fragment">no need for versioning; query resolvers are independent of one another</li>
         </ul></li>
         </ul>
-        </div>
         <aside class="notes">
         
         </aside>
         </section>
         <section id="performance-improvements" class="slide level2">
         <h2>Performance Improvements</h2>
-        <div>
         <ul>
         <li class="fragment">GraphQL delivers better performance by…
         <ul>
+        <li class="fragment">multiple independent queries can be sent in a single HTTP request</li>
         <li class="fragment">reducing the number of requests for a data graph</li>
-        <li class="fragment">aggregating the data graph on the server-side</li>
+        <li class="fragment">aggregating the data graph on the server-side, potentially across service boundaries</li>
         <li class="fragment">only sending the data fields requested</li>
         </ul></li>
         </ul>
-        </div>
         <aside class="notes">
         
         </aside>
         </section>
         <section id="schema-definition-language-sdl" class="slide level2">
         <h2>Schema Definition Language (SDL)</h2>
-        <div>
         <ul>
         <li class="fragment">Strong type system</li>
+        <li class="fragment">Type system == GOOD!</li>
         <li class="fragment">Type language: Schema Definition Language (SDL)</li>
+        <li class="fragment">GraphQL schema can be introspected by tools and runtimes</li>
         </ul>
-        </div>
         <aside class="notes">
         <p>GraphQL has its own type system that’s used to define the schema of an API. GraphQL defines its own simple language. We’ll use the “GraphQL schema language” - it’s similar to the query language, and allows us to talk about GraphQL schemas in a language-agnostic way. The syntax for writing schemas is called Schema Definition Language (SDL).</p>
+        <p>The more you can control typing in your application and API, the more stable your software will be in general.</p>
         </aside>
         </section>
         <section id="user-defined-scalars" class="slide level2">
         <h2>User-defined Scalars</h2>
         <pre class="graphql"><code>
         scalar uuid
-        
         scalar timestamp
-        
         scalar secureUrl
         </code></pre>
         <aside class="notes">
         <p>In addition to built-in scalars, you can define your own custom scalar types. Often you need to support custom atomic data types (e.g. Date), or you want a version of an existing type that does some fine-grained validation. To enable this, GraphQL allows you to define custom scalar types. In a lot of cases you might want to check if an email, date-time or url format is valid. It is easily doable by defining your custom email/datetime/url scalars.</p>
-        </aside>
-        </section>
-        <section id="enumerations" class="slide level2">
-        <h2>Enumerations</h2>
-        <pre class="graphql"><code>
-        enum ConflictAction {
-          ignore
-          update
-        }
-        </code></pre>
-        <aside class="notes">
-        <p>Enumerations are similar to custom scalars, but their values can only be one of a pre-defined list of strings.</p>
         </aside>
         </section>
         <section id="object-types-and-fields" class="slide level2">
@@ -227,6 +209,18 @@
           min: ActorMinFields
         }
         </code></pre>
+        </section>
+        <section id="enumerations" class="slide level2">
+        <h2>Enumerations</h2>
+        <pre class="graphql"><code>
+        enum ConflictAction {
+          ignore
+          update
+        }
+        </code></pre>
+        <aside class="notes">
+        <p>Enumerations are similar to custom scalars, but their values can only be one of a pre-defined list of strings.</p>
+        </aside>
         </section>
         <section id="lists-and-non-null" class="slide level2">
         <h2>Lists and Non-null</h2>
@@ -377,22 +371,56 @@
         }
         </code></pre>
         </section>
-        <section id="servers" class="slide level2">
-        <h2>Servers</h2>
+        <section id="server-implementations" class="slide level2">
+        <h2>Server implementations</h2>
         <ul>
-        <li class="fragment">Apollo Server (Node.js)</li>
+        <li class="fragment">Apollo Server (Node.js)
+        <ul>
+        <li class="fragment">https://www.apollographql.com/docs/apollo-server/</li>
+        </ul></li>
+        <li class="fragment">GraphQL Ruby (Ruby/RoR)
+        <ul>
+        <li class="fragment">https://graphql-ruby.org/</li>
+        </ul></li>
+        <li class="fragment">GraphQL Java (Java)
+        <ul>
+        <li class="fragment">https://www.graphql-java.com/<br />
+        </li>
+        </ul></li>
+        <li class="fragment">GraphQL .NET (.NET)
+        <ul>
+        <li class="fragment">https://graphql-dotnet.github.io/</li>
+        </ul></li>
         </ul>
         </section>
         <section id="clients" class="slide level2">
         <h2>Clients</h2>
         <ul>
-        <li class="fragment">Apollo Client (JavaScript, iOS, Android)</li>
-        <li class="fragment">Relay (https://relay.dev/)</li>
+        <li class="fragment">Apollo Client (JavaScript)
+        <ul>
+        <li class="fragment">https://www.apollographql.com/docs/react/</li>
+        </ul></li>
+        <li class="fragment">Relay Modern (JavaScript/React)
+        <ul>
+        <li class="fragment">(https://relay.dev/)</li>
+        </ul></li>
+        <li class="fragment">Apollo Client (iOS)
+        <ul>
+        <li class="fragment">https://www.apollographql.com/docs/ios/</li>
+        </ul></li>
+        <li class="fragment">Apollo Client (Android)
+        <ul>
+        <li class="fragment">https://github.com/apollographql/apollo-android</li>
+        </ul></li>
         </ul>
         </section>
         <section id="tools" class="slide level2">
         <h2>Tools</h2>
         <ul>
+        <li class="fragment">graphql-tools
+        <ul>
+        <li class="fragment">https://www.apollographql.com/docs/graphql-tools/</li>
+        </ul></li>
         <li class="fragment">Insomnia
         <ul>
         <li class="fragment">https://insomnia.rest/graphql/</li>
@@ -400,6 +428,10 @@
         <li class="fragment">Altair
         <ul>
         <li class="fragment">https://altair.sirmuel.design/</li>
+        </ul></li>
+        <li class="fragment">Postman
+        <ul>
+        <li class="fragment">https://learning.getpostman.com/docs/postman/sending-api-requests/graphql/</li>
         </ul></li>
         </ul>
         </section>
@@ -419,10 +451,17 @@
         <ul>
         <li class="fragment">https://graphql.guide/</li>
         </ul></li>
+        <li class="fragment">Awesome list of GraphQL and Relay
+        <ul>
+        <li class="fragment">https://github.com/chentsulin/awesome-graphql</li>
+        </ul></li>
         </ul>
         </section>
         <section id="this-presentation" class="slide level2">
         <h2>This presentation</h2>
+        <ul>
+        <li class="fragment">https://github.com/cebartling/graphql-introduction</li>
+        </ul>
         </section>
         <section id="literature-cited" class="slide level2">
         <h2>Literature Cited</h2>
@@ -438,6 +477,7 @@
         <ul>
         <li class="fragment">https://crystallize.com/blog/better-developer-experience-with-graphql</li>
         <li class="fragment">https://graphql.org/blog/subscriptions-in-graphql-and-relay/</li>
+        <li class="fragment">https://blog.echobind.com/8-business-reasons-to-adopt-graphql-and-apollo-server-c2e0e9655310</li>
         </ul>
         </section>
       </div>
