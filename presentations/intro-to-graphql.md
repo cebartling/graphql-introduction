@@ -113,7 +113,8 @@ The key here was treating data like a hierarchy, not a table. This was indicativ
 ## Developer Experience
 
 + GraphQL delivers better developer experience with...
-  -  a self describing API which can be introspected by tooling and tooling can then validate against schema
+  -  a self describing API which can be introspected by tooling
+  -  tooling can validate against schema
   -  query and mutation input validation 
   -  query facilities that aggregate data on the server-side
   -  no need for versioning; query resolvers are independent of one another
